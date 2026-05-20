@@ -1,0 +1,90 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "livekit-plugins-respeecher"
+dynamic = ["version"]
+description = "Respeecher TTS plugin for LiveKit Agents."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10,<3.15"
+authors = [{ name = "Respeecher" }]
+keywords = ["respeecher", "livekit", "livekit-agents", "tts", "voice", "audio"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Topic :: Multimedia :: Sound/Audio",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = [
+    "livekit-agents>=1.5,<2",
+    "aiohttp>=3.10,<4",
+]
+
+[project.urls]
+Documentation = "https://github.com/respeecher/livekit-plugins-respeecher#readme"
+Source = "https://github.com/respeecher/livekit-plugins-respeecher"
+Issues = "https://github.com/respeecher/livekit-plugins-respeecher/issues"
+
+[dependency-groups]
+dev = [
+    "mypy",
+    "pytest",
+    "pytest-asyncio>=0.25.3",
+    "ruff",
+]
+
+[tool.hatch.version]
+path = "src/livekit/plugins/respeecher/version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/livekit"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src/livekit",
+    "/examples",
+    "/tests",
+    "/LICENSE",
+    "/README.md",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [
+    ".uv-cache",
+    ".venv",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "B",
+    "C4",
+    "UP",
+]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["livekit"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.mypy]
+strict = true
+disallow_any_generics = false
+explicit_package_bases = true
+namespace_packages = true
+mypy_path = "src"
+files = ["src", "tests"]
